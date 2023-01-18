@@ -2,3 +2,9 @@ credentials/
 .venv/
 
 key_gen.py
+
+# Style checkers
+.flake8
+Makefile
+pyproject.toml
+requirements-dev.txt
