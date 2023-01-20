@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import rsa
+from rsa.pkcs1 import DecryptionError
 
 
 def read_json(filepath: Union[str, Path]) -> Dict[str, Any]:
@@ -25,3 +26,15 @@ def encrypt_message(message: bytes) -> bytes:
 
     encrypted_message = rsa.encrypt(message, pub_key=pub_key)
     return encrypted_message
+
+
+def decrypt_message(message: bytes) -> Optional[bytes]:
+    priv_key_path = get_project_root() / "credentials/need-private.pem"
+    with open(priv_key_path, "rb") as priv_f:
+        priv_key = rsa.PrivateKey.load_pkcs1(priv_f.read())
+
+    try:
+        decrypted_message = rsa.decrypt(message, priv_key=priv_key)
+        return decrypted_message
+    except DecryptionError:
+        return None

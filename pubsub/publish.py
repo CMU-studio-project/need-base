@@ -13,8 +13,16 @@ logger.setLevel(logging.DEBUG)
 
 
 def publish_message(message: bytes, topic_id: str, **kwargs) -> None:  # type: ignore[no-untyped-def]
-    # Publisher
-    publisher = pubsub_v1.PublisherClient()
+    if kwargs.get("ordering_key", ""):
+        publisher_options = pubsub_v1.types.PublisherOptions(enable_message_ordering=True)
+        # Sending messages to the same region ensures they are received in order
+        # even when multiple publishers are used.
+        client_options = {"api_endpoint": "us-east1-pubsub.googleapis.com:443"}
+        publisher = pubsub_v1.PublisherClient(
+            publisher_options=publisher_options, client_options=client_options
+        )
+    else:
+        publisher = pubsub_v1.PublisherClient()
     topic_path = publisher.topic_path(PROJECT_ID, topic_id)
 
     # Message encryption
@@ -33,5 +41,9 @@ if __name__ == "__main__":
         print(data)
 
         publish_message(
-            data.encode("utf-8"), "input_speech", name="kyumin", organization="coddlers"
+            data.encode("utf-8"),
+            "input_speech",
+            name="kyumin",
+            organization="coddlers",
+            ordering_key="key1",
         )
