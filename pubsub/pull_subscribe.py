@@ -32,7 +32,8 @@ def subscribe_message(subscription_id: str, timeout: int = 10) -> None:
         except TimeoutError:
             streaming_pull_future.cancel()  # Trigger the shutdown.
             streaming_pull_future.result()  # Block until the shutdown is complete.
-            
+
+
 def sub_callback(message: sub_message.Message) -> None:
     message_data = message.data
     decrypted_message = decrypt_message(message_data)
