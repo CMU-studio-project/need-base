@@ -17,7 +17,7 @@ pip install -r requirements.txt
 - Python3.10
 
 #### Request credentials
-- Kyumin - 카톡/슬랙/메일
+- Notion 참조
 
 ## Publish data
 ```python
@@ -26,7 +26,19 @@ from pubsub.publish import publish_message
 data = b"Some bytes message"
 publish_message(data, "topic name", any_keyword_key="any_keyword_val")
 ```
-For topic name, ask Kyumin
 
-
-
+## Run push subscription
+set module/task/model
+```shell
+export NEED_PROJECT_MODULE=nlp
+export NEED_PROJECT_TASK=sentiment
+export NEED_PROJECT_MODEL=roberta
+```
+run eventsub server
+```shell
+python pubsub/push_subscribe.py
+```
+run ngrok
+```shell
+ngrok http 18080
+```
