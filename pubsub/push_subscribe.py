@@ -1,19 +1,24 @@
 import base64
 import json
 import logging
-import threading
-import time
+import os
 from typing import Tuple
 
 from flask import Flask, request
 
-from pubsub.utils import decrypt_message, get_project_root
+from pubsub.utils import decrypt_message, get_project_root, load_task_module
 
 app = Flask(__name__)
 PROJECT_ROOT = get_project_root()
 
 logger = logging.getLogger("subscriber-log")
 logger.setLevel(logging.DEBUG)
+
+CALLBACK_MODULE = os.environ["NEED_PROJECT_CALLBACK_MODULE"]
+CALLBACK_TASK = os.environ["NEED_PROJECT_CALLBACK_TASK"]
+CALLBACK_MODEL = os.environ["NEED_PROJECT_CALLBACK_MODEL"]
+
+task_controller = load_task_module(CALLBACK_MODULE, CALLBACK_TASK, CALLBACK_MODEL)
 
 
 @app.route("/", methods=["POST"])
@@ -33,20 +38,10 @@ def receive_sub() -> Tuple[str, int]:
         "message": decrypted_message,
         "message_id": env_body["message_id"],
     }
-
-    thread = threading.Thread(target=run_task, kwargs=rec_data)
-    thread.start()
+    task_controller(**rec_data)
 
     return "OK", 200
 
 
-def run_task(message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
-    time.sleep(3)
-    print(message)
-
-    for key, val in kwargs.items():
-        print(f"{key}: {val}")
-
-
 if __name__ == "__main__":
-    app.run(port=8080, debug=True)
+    app.run(port=18080, debug=True)
