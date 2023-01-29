@@ -6,6 +6,7 @@ from typing import Tuple
 
 from flask import Flask, request
 
+from pubsub.publish import publish_message
 from pubsub.utils import decrypt_message, get_project_root, load_task_module
 
 app = Flask(__name__)
@@ -36,11 +37,23 @@ def receive_sub() -> Tuple[str, int]:
     rec_data = {
         **env_body.get("attributes", {}),
         "message": decrypted_message,
-        "message_id": env_body["message_id"],
     }
-    task_controller(**rec_data)
+    run_task(**rec_data)
 
     return "OK", 200
+
+def run_task(message: bytes, **kwargs) -> None:
+    prediction = task_controller(message, **kwargs)
+    device_id = kwargs.get("device_id", "")
+    if device_id == "pi7":
+        topic_id = "sentiment-pi7"
+    elif device_id == "pi8":
+        topic_id = "sentiment-pi8"
+    else:
+        raise ValueError("Unsupported device")
+    session_id = kwargs.get("session_id", device_id)
+    
+    publish_message(prediction, topic_id, device_id=device_id, session_id=session_id, ordering_key=device_id)
 
 
 if __name__ == "__main__":
