@@ -6,8 +6,9 @@ from typing import Tuple
 
 from flask import Flask, request
 
+from nlp.controller import NLPTaskController
 from pubsub.publish import publish_message
-from pubsub.utils import decrypt_message, get_project_root, load_task_module
+from pubsub.utils import decrypt_message, get_project_root
 
 app = Flask(__name__)
 PROJECT_ROOT = get_project_root()
@@ -15,11 +16,10 @@ PROJECT_ROOT = get_project_root()
 logger = logging.getLogger("subscriber-log")
 logger.setLevel(logging.DEBUG)
 
-CALLBACK_MODULE = os.environ["NEED_PROJECT_CALLBACK_MODULE"]
 CALLBACK_TASK = os.environ["NEED_PROJECT_CALLBACK_TASK"]
 CALLBACK_MODEL = os.environ["NEED_PROJECT_CALLBACK_MODEL"]
 
-task_controller = load_task_module(CALLBACK_MODULE, CALLBACK_TASK, CALLBACK_MODEL)
+task_controller = NLPTaskController(CALLBACK_TASK, CALLBACK_MODEL)
 
 
 @app.route("/", methods=["POST"])
@@ -42,7 +42,8 @@ def receive_sub() -> Tuple[str, int]:
 
     return "OK", 200
 
-def run_task(message: bytes, **kwargs) -> None:
+
+def run_task(message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
     prediction = task_controller(message, **kwargs)
     device_id = kwargs.get("device_id", "")
     if device_id == "pi7":
@@ -52,8 +53,10 @@ def run_task(message: bytes, **kwargs) -> None:
     else:
         raise ValueError("Unsupported device")
     session_id = kwargs.get("session_id", device_id)
-    
-    publish_message(prediction, topic_id, device_id=device_id, session_id=session_id, ordering_key=device_id)
+
+    publish_message(
+        prediction, topic_id, device_id=device_id, session_id=session_id, ordering_key=device_id
+    )
 
 
 if __name__ == "__main__":
