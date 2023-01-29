@@ -1,8 +1,8 @@
 import base64
 import json
 import logging
-from typing import Tuple
 import os
+from typing import Tuple
 
 from flask import Flask, request
 
@@ -19,6 +19,7 @@ CALLBACK_TASK = os.environ["NEED_PROJECT_CALLBACK_TASK"]
 CALLBACK_MODEL = os.environ["NEED_PROJECT_CALLBACK_MODEL"]
 
 task_controller = load_task_module(CALLBACK_MODULE, CALLBACK_TASK, CALLBACK_MODEL)
+
 
 @app.route("/", methods=["POST"])
 def receive_sub() -> Tuple[str, int]:
