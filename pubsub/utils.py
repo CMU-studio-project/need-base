@@ -5,8 +5,6 @@ from typing import Any, Dict, Optional, Union
 import rsa
 from rsa.pkcs1 import DecryptionError
 
-from nlp.controller import NLPTaskController
-
 
 def read_json(filepath: Union[str, Path]) -> Dict[str, Any]:
     assert str(filepath).endswith(".json")
@@ -40,10 +38,3 @@ def decrypt_message(message: bytes) -> Optional[bytes]:
         return decrypted_message
     except DecryptionError:
         return None
-
-
-def load_task_module(module: str, task: str, model: str) -> Any:
-    if module == "nlp":
-        return NLPTaskController(task, model)
-    else:
-        raise ValueError("Invalid Module")
