@@ -14,6 +14,7 @@ class TestController:
         session_id = str(time.time_ns())
         publish_message(
             audio,
+            "iitp-class-team-4",
             self.text_topic_id,
             ordering_key=self.device_id,
             device_id=self.device_id,
