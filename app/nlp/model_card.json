@@ -6,10 +6,4 @@
       "label_map": {"LABEL_0": "negative", "LABEL_1": "neutral", "LABEL_2": "positive"}
     }
   },
-  "automatic-speech-recognition": {
-    "wav2vec2": {
-      "input_type": "audio",
-      "model": "facebook/wav2vec2-large-960h-lv60-self"
-    }
-  }
 }
