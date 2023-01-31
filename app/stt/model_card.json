@@ -1,8 +1,0 @@
-{
-  "automatic-speech-recognition": {
-    "roberta": {
-      "model": "cardiffnlp/twitter-roberta-base-sentiment",
-      "label_map": {"LABEL_0": "negative", "LABEL_1": "neutral", "LABEL_2": "positive"}
-    }
-  }
-}
