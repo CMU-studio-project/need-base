@@ -47,7 +47,7 @@ class NLPTaskController:
             fp.write(audio)
             temp_audio_name = fp.name
         
-        prediction = self.pipeline(temp_audio_name)[0]
+        prediction = self.pipeline(temp_audio_name)["text"]
         prediction_bytes = prediction.encode("utf-8")
         
         os.remove(temp_audio_name)
