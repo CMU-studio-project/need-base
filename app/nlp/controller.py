@@ -7,8 +7,6 @@ from transformers import pipeline
 from needpubsub.subscribe import subscribe_message_async
 from needpubsub.publish import publish_message
 
-NLP_ROOT = Path(__file__).parent
-
 
 class NLPTaskController:
     def __init__(
@@ -27,7 +25,7 @@ class NLPTaskController:
 
     @staticmethod
     def load_model(task: str, model: str) -> Any:
-        with open(NLP_ROOT / "model_card.json", "r", encoding="utf-8") as f:
+        with open(Path(__file__).parent / "model_card.json", "r", encoding="utf-8") as f:
             model_card = json.load(f)
         task_card = model_card.get(task)
         if task_card is None:
