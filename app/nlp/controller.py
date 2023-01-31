@@ -75,7 +75,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--task", type=str, help="NLP task")
     parser.add_argument("-m", "--model", type=str, help="NLP model for task in model card")
-    parser.add_argument("-p", "project_id", type=str, help="Project ID")
+    parser.add_argument("-p", "--project_id", type=str, help="Project ID")
     parser.add_argument("-s", "--subscription_id", type=str, help="Google Pub/Sub subscription ID")
     args = parser.parse_args()
     
