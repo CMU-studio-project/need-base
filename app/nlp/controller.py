@@ -74,6 +74,8 @@ class NLPTaskController:
         else:
             raise ValueError("Unsupported data type")
         
+        print(f"Prediction: {prediction.decode('utf-8')}")
+        
         publish_message(
             prediction,
             project_id=self.project_id,
