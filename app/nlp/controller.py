@@ -4,6 +4,9 @@ from typing import Any
 
 from transformers import pipeline
 
+from needpubsub.subscribe import subscribe_message_async
+from needpubsub.publish import publish_message
+
 NLP_ROOT = Path(__file__).parent
 
 
@@ -35,13 +38,24 @@ class NLPTaskController:
 
         return pred_data_bytes
 
-    def __call__(self, message: bytes, **kwargs) -> bytes:  # type: ignore[no-untyped-def]
+    def eventsub(self, subscription_id: str) -> None:
+        subscribe_message_async(subscription_id, self.sub_callback)
+
+    def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         message_text = message.decode("utf-8")
         prediction = self.predict(message_text)
-        return prediction
+        
+        publish_message(prediction, ordering_key=kwargs.get("device_id"), **kwargs)
 
 
 if __name__ == "__main__":
-    controller = NLPTaskController()
-    pred = controller.predict("Shut up you Malfoy")
-    print(pred)
+    import argparse
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--task", type=str, help="NLP task")
+    parser.add_argument("-m", "--model", type=str, help="NLP model for task in model card")
+    parser.add_argument("-s", "--subscription_id", type=str, help="Google Pub/Sub subscription ID")
+    args = parser.parse_args()
+    
+    controller = NLPTaskController(args.task, args.model)
+    controller.eventsub(args.subscription_id)

@@ -11,7 +11,7 @@ NLP_ROOT = Path(__file__).parent
 
 
 class NLPTaskController:
-    def __init__(self, task: str = "sentiment-analysis", model: str = "roberta"):
+    def __init__(self, task: str = "automatic-speech-recognition", model: str = "wav2vec2"):
         model_config = self.load_model(task, model)
         self.pipeline = pipeline(task, model=model_config["model"])
         self.label_map = model_config["label_map"]

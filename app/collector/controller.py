@@ -10,5 +10,5 @@ class MainController:
         subscribe_message_async(subscription_id, self.sub_callback, timeout)
     
     def sub_callback(self, message: bytes, device_id: str, session_id: str, **kwargs) -> None:
-    
+        pass
     
