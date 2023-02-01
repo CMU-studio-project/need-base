@@ -31,6 +31,7 @@ class TestController:
         with open(wav_path, "rb") as f:
             audio = f.read()
         self.publish_text(audio)
+        self.get_response()
         
     @staticmethod
     def sub_callback(message: bytes, **kwargs):
