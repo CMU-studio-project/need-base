@@ -1,8 +1,10 @@
 import time
+import json
 from pathlib import Path
 from typing import Union
 
 from needpubsub.publish import publish_message
+from needpubsub.subscribe import subscribe_message_sync
 
 
 class TestController:
@@ -22,15 +24,23 @@ class TestController:
         )
 
     def get_response(self) -> None:
-        subscription_id = f"sentiment-{self.device_id}-sub"
+        subscription_id = f"command-{self.device_id}-sub"
+        subscribe_message_sync("iitp-class-team-4", subscription_id, self.sub_callback)
 
     def run_test(self, wav_path: Union[str, Path]) -> None:
         with open(wav_path, "rb") as f:
             audio = f.read()
         self.publish_text(audio)
+        
+    @staticmethod
+    def sub_callback(message: bytes, **kwargs):
+        command = json.loads(message.decode("utf-8"))
+        print(command)
+        print(kwargs)
 
 
 if __name__ == "__main__":
     ctrl = TestController()
     wav_path = Path(__file__).parent / "ref_clean.wav"
+    
     ctrl.run_test(wav_path)
