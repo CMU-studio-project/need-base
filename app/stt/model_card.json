@@ -1,0 +1,5 @@
+{
+  "automatic-speech-recognition": {
+    "wav2vec2-large": "facebook/wav2vec2-large-960h-lv60-self"
+  }
+}
