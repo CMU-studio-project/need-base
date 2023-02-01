@@ -18,7 +18,7 @@ class MessageCollector:
     def eventsub(self, subscription_id: str, timeout: Optional[int] = None) -> None:
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback, timeout)
     
-    def sub_callback(self, message: bytes, device_id: str, session_id: str, data_type: str, **kwargs) -> None:
+    def sub_callback(self, message: bytes, device_id: str, session_id: str, **kwargs) -> None:
         redis_key = f"{device_id}-{session_id}"
         session_data = self.redis.get(redis_key)
         if session_data is None:
@@ -29,6 +29,7 @@ class MessageCollector:
         else:
             session_data = json.loads(session_data)
             
+        data_type = kwargs.get("data_type")
         if data_type == "text":
             session_data["text"] = message.decode("utf-8")
         elif data_type == "sentiment-analysis":
