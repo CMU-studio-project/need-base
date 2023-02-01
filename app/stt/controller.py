@@ -40,7 +40,7 @@ class STTController:
             fp.write(audio)
             temp_audio_name = fp.name
         
-        prediction = self.pipeline(temp_audio_name)["text"]
+        prediction = self.pipeline(temp_audio_name)["text"].lower()
         prediction_bytes = prediction.encode("utf-8")
         
         os.remove(temp_audio_name)
@@ -52,6 +52,8 @@ class STTController:
 
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         prediction = self.inference(message)
+        device_id = kwargs.get("device_id")
+        session_id = kwargs.get("session_id")
         
         print(f"Publishing {prediction.decode('utf-8')}")
         
@@ -59,8 +61,17 @@ class STTController:
             prediction,
             project_id=self.project_id,
             topic_id=self.topic_id,
-            ordering_key=kwargs.get("device_id"),
-            **kwargs
+            ordering_key=device_id,
+            device_id=device_id,
+            session_id=session_id,
+        )
+        publish_message(
+            prediction,
+            project_id=self.project_id,
+            topic_id="collector",
+            device_id=device_id,
+            session_id=session_id,
+            data_type="text"
         )
 
 

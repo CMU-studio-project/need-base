@@ -16,6 +16,7 @@ class NLPTaskController:
         project_id: str = "iitp-class-team-4",
         topic_id: str = "stt-text"
     ):
+        self.task = task
         self.project_id = project_id
         self.topic_id = topic_id
         model_config = self.load_model(task, model)
@@ -52,6 +53,8 @@ class NLPTaskController:
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         message_text = message.decode("utf-8")
         prediction = self.inference(message_text)
+        device_id = kwargs.get("device_id")
+        session_id = kwargs.get("session_id")
         
         print(f"Publishing {prediction.decode('utf-8')}")
         
@@ -59,8 +62,10 @@ class NLPTaskController:
             prediction,
             project_id=self.project_id,
             topic_id=self.topic_id,
-            ordering_key=kwargs.get("device_id"),
-            **kwargs
+            ordering_key=device_id,
+            device_id=device_id,
+            session_id=session_id,
+            data_type=self.task
         )
 
 
