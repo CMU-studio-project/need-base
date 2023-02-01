@@ -11,7 +11,7 @@ class MessageCollector:
     def __init__(self, project_id: str, topic_id: str):
         self.project_id = project_id
         self.topic_id = topic_id
-        self.redis = redis.Redis(host="localhost", port=6347, db=0)
+        self.redis = redis.Redis(host="localhost", port=6379, db=0)
         self.redis.flushdb()
         self.handler = DataHandler()
     
