@@ -13,7 +13,7 @@ class DataHandler:
     def _chr_match(ref: str, pred: str, threshold: float = 0.2):
         return cer(ref, pred) < threshold
     
-    def handle(self, complete_data: Dict[str: Any]) -> Dict[str, str]:
+    def handle(self, complete_data: Dict[str, Any]) -> Dict[str, str]:
         text = complete_data["text"]
         sentiment = complete_data["sentiment"]
         
