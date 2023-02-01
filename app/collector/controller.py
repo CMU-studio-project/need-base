@@ -50,3 +50,14 @@ class MessageCollector:
             )
         else:
             self.redis.set(redis_key, json.dumps(session_data, ensure_ascii=False))
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--project_id", type=str, help="Google Pub/Sub Project ID")
+    parser.add_argument("-s", "--subscription_id", type=str, help="Google Pub/Sub subscription ID")
+    parser.add_argument("--topic_id", type=str, help="Google Pub/Sub Topic ID")
+    args = parser.parse_args()
+    
+    collector = MessageCollector(args.project_id, args.topic_id)
+    collector.eventsub(args.subscription_id)
