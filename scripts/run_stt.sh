@@ -5,7 +5,7 @@ export GOOGLE_APPLICATION_CREDENTIAL="${PROJECT_ROOT}/credentials/iitp-class-tea
 
 PROJECT_ID=${PROJECT_ID:-'iitp-class-team-4'}
 TOPIC_ID=${TOPIC_ID:-'stt-text'}
-SUBSCRIPTION_ID=${SUBSCRIPTION_ID:-'stt-text-sentiment'}
+SUBSCRIPTION_ID=${SUBSCRIPTION_ID:-'pi-speech-stt'}
 TASK=${TASK:-'automatic-speech-analysis'}
 MODEL=${MODEL:-'wav2vec2-large'}
 
