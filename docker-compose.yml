@@ -10,21 +10,21 @@ services:
     restart: always
     build:
         context: .
-        dockerfile: Dockerfile
+        dockerfile: app/collector/Dockerfile
     command: sh scripts/run_collector.sh
     environment:
       PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
       TOPIC_ID: ${TOPIC_ID:-command}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-collector-sub}
     volumes:
-      - ./:/need/
+      - ./app/collector/:/need/app/collector/
     depends_on:
       - redis
   nlp:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: app/nlp/Dockerfile
     command: sh scripts/run_nlp.sh
     environment:
       PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
@@ -33,12 +33,12 @@ services:
       TASK: ${TASK:-sentiment-analysis}
       MODEL: ${MODEL:-roberta}
     volumes:
-      - ./:/need/
+      - ./app/nlp/:/need/app/nlp/
   stt:
     restart: always
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: app/stt/Dockerfile
     command: sh scripts/run_stt.sh
     environment:
       PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
@@ -47,4 +47,4 @@ services:
       TASK: ${TASK:-automatic-speech-analysis}
       MODEL: ${MODEL:-wav2vec2-large}
     volumes:
-      - ./:/need/
+      - ./app/stt/:/need/app/stt/

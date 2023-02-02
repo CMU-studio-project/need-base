@@ -1,4 +1,0 @@
-jiwer==2.5.1
-redis==4.3.5
-transformers==4.26.0
-torch==1.13.1

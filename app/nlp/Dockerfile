@@ -5,4 +5,4 @@ WORKDIR /need
 
 RUN pip install pip --upgrade
 RUN pip install ./need-pubsub
-RUN pip install -r requirements.txt
+RUN pip install -r app/nlp/requirements.txt
