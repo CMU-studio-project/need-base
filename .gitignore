@@ -8,3 +8,9 @@ key_gen.py
 Makefile
 pyproject.toml
 requirements-dev.txt
+
+# Package
+need-pubsub
+
+# Env
+.env
