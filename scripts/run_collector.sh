@@ -9,4 +9,4 @@ SUBSCRIPTION_ID=${SUBSCRIPTION_ID:-'collector-sub'}
 
 cd "${PROJECT_ROOT}/app/collector"
 
-python controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID}
+python3 controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID}

@@ -12,4 +12,4 @@ MODEL=${MODEL:-'roberta'}
 
 cd "${PROJECT_ROOT}/app/nlp"
 
-python controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID} --task ${TASK} --model ${MODEL}
+python3 controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID} --task ${TASK} --model ${MODEL}
