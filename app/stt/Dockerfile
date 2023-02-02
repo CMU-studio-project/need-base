@@ -6,8 +6,8 @@ COPY ./need-pubsub /need/need-pubsub
 COPY ./scripts /need/scripts
 WORKDIR /need
 
-RUN apt update
-RUN apt install ffmpeg
+RUN apt-get update
+RUN apt-get install ffmpeg -y
 
 RUN pip install pip --upgrade
 RUN pip install ./need-pubsub
