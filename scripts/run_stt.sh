@@ -12,4 +12,4 @@ MODEL=${MODEL:-'wav2vec2-large'}
 
 cd "${PROJECT_ROOT}/app/stt"
 
-python controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID} --model ${MODEL}
+python3 controller.py --project_id ${PROJECT_ID} --topic_id ${TOPIC_ID} --subscription_id ${SUBSCRIPTION_ID} --model ${MODEL}
