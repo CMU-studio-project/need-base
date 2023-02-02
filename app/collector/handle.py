@@ -13,11 +13,15 @@ class DataHandler:
     def _chr_match(ref: str, pred: str, threshold: float = 0.2):
         return cer(ref, pred) < threshold
     
-    def handle(self, complete_data: Dict[str, Any]) -> Dict[str, str]:
+    def handle(self, complete_data: Dict[str, Any]) -> Dict[str, Any]:
         text = complete_data["text"]
         sentiment = complete_data["sentiment"]
         
-        command = dict()
+        command = {
+            "power": None,
+            "color": None,
+            "intensity": None,
+        }
         # check turn on
         if self._chr_match("turn on", text) or self._chr_match("lumos", text):
             command["power"] = "on"
@@ -29,10 +33,13 @@ class DataHandler:
         # check sentiment
         sentiment_label = sentiment["label"]
         if sentiment_label == "positive":
-            command["color"] = "blue"
+            command["color"] = [240, 100.0, 62.7]
+            command["intensity"] = 100
         elif sentiment_label == "neutral":
-            command["color"] = "green"
+            command["color"] = [38, 68.1, 92.2]
+            command["intensity"] = 60
         elif sentiment_label == "negative":
-            command["color"] = "red"
-        
+            command["color"] = [0, 92.9, 49.8]
+            command["intensity"] = 20
+            
         return command
