@@ -13,9 +13,9 @@ services:
         dockerfile: Dockerfile
     command: sh scripts/run_collector.sh
     environment:
-      PROJECT_ID: ${PROJECT_ID:-'iitp-class-team-4'}
-      TOPIC_ID: ${TOPIC_ID:-'command'}
-      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-'collector-sub'}
+      PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
+      TOPIC_ID: ${TOPIC_ID:-command}
+      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-collector-sub}
     volumes:
       - ./:/need/
     depends_on:
@@ -27,11 +27,11 @@ services:
       dockerfile: Dockerfile
     command: sh scripts/run_nlp.sh
     environment:
-      PROJECT_ID: ${PROJECT_ID:-'iitp-class-team-4'}
-      TOPIC_ID: ${TOPIC_ID:-'collector'}
-      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-'stt-text-sentiment'}
-      TASK: ${TASK:-'sentiment-analysis'}
-      MODEL: ${MODEL:-'roberta'}
+      PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
+      TOPIC_ID: ${TOPIC_ID:-collector}
+      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-stt-text-sentiment}
+      TASK: ${TASK:-sentiment-analysis}
+      MODEL: ${MODEL:-roberta}
     volumes:
       - ./:/need/
   stt:
@@ -41,10 +41,10 @@ services:
       dockerfile: Dockerfile
     command: sh scripts/run_stt.sh
     environment:
-      PROJECT_ID: ${PROJECT_ID:-'iitp-class-team-4'}
-      TOPIC_ID: ${TOPIC_ID:-'stt-text'}
-      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-'pi-speech-stt'}
-      TASK: ${TASK:-'automatic-speech-analysis'}
-      MODEL: ${MODEL:-'wav2vec2-large'}
+      PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
+      TOPIC_ID: ${TOPIC_ID:-stt-text}
+      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-pi-speech-stt}
+      TASK: ${TASK:-automatic-speech-analysis}
+      MODEL: ${MODEL:-wav2vec2-large}
     volumes:
       - ./:/need/
