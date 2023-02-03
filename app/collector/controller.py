@@ -1,7 +1,6 @@
 from typing import Optional
 import json
 import redis
-import logging
 
 from needpubsub.publish import publish_message
 from needpubsub.subscribe import subscribe_message_async
@@ -17,7 +16,7 @@ class MessageCollector:
         self.handler = DataHandler()
     
     def eventsub(self, subscription_id: str, timeout: Optional[int] = None) -> None:
-        logging.debug(f"Subscribing {subscription_id}")
+        print(f"Subscribing {subscription_id}", flush=True)
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback, timeout)
     
     def sub_callback(self, message: bytes, device_id: str, session_id: str, **kwargs) -> None:
@@ -31,7 +30,7 @@ class MessageCollector:
         else:
             session_data = json.loads(session_data)
         
-        logging.debug(f"Receiving message {message}")
+        print(f"Receiving message {message}", flush=True)
         
         data_type = kwargs.get("data_type")
         if data_type == "text":
@@ -39,7 +38,7 @@ class MessageCollector:
         elif data_type == "sentiment-analysis":
             session_data["sentiment"] = json.loads(message.decode("utf-8"))
         else:
-            logging.error(f"Invalid data type {data_type}")
+            print(f"Invalid data type {data_type}", flush=True)
             return
         
         if all([v is not None for v in session_data.values()]):
@@ -48,7 +47,7 @@ class MessageCollector:
             command_bytes = json.dumps(command, ensure_ascii=False).encode("utf-8")
             
             topic_id = f"{self.topic_id}-{device_id}"
-            logging.debug(f"Publishing {command_bytes} to {topic_id}")
+            print(f"Publishing {command_bytes} to {topic_id}", flush=True)
             publish_message(
                 command_bytes,
                 project_id=self.project_id,
