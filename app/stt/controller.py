@@ -3,6 +3,7 @@ import json
 from tempfile import NamedTemporaryFile
 from pathlib import Path
 from typing import Any
+import logging
 
 from transformers import pipeline
 
@@ -48,6 +49,7 @@ class STTController:
         return prediction_bytes
 
     def eventsub(self, subscription_id: str) -> None:
+        logging.debug(f"Subscribing {subscription_id}")
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback)
 
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
@@ -55,7 +57,7 @@ class STTController:
         device_id = kwargs.get("device_id")
         session_id = kwargs.get("session_id")
         
-        print(f"Publishing {prediction.decode('utf-8')}")
+        logging.debug(f"Publishing {prediction.decode('utf-8')}")
         
         publish_message(
             prediction,
