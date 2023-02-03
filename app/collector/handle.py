@@ -23,23 +23,36 @@ class DataHandler:
             "intensity": None,
         }
         # check turn on
-        if self._chr_match("turn on", text) or self._chr_match("lumos", text):
+        if self._chr_match("turn on", text) or self._chr_match("lumos", text) or self._chr_match("tarn on", text):
             command["power"] = "on"
         
         # check turn off
-        elif self._chr_match("turn off", text) or self._chr_match("nox", text):
+        elif self._chr_match("turn off", text) or self._chr_match("nox", text) or self._word_match("good bye", text):
             command["power"] = "off"
+
+        elif self._chr_match("brighter", text) or self._chr_match("lumos maxima", text):
+            command["intensity"] = 40
+
+        elif self._chr_match("darker", text) or self._chr_match("daker", text):
+            command["intensity"] = -40
+
             
         # check sentiment
         sentiment_label = sentiment["label"]
         if sentiment_label == "positive":
-            command["color"] = [240, 100.0, 62.7]
-            command["intensity"] = 100
+            command["color"] = [308, 64, 88] 
         elif sentiment_label == "neutral":
-            command["color"] = [38, 68.1, 92.2]
-            command["intensity"] = 60
+            command["color"] = [120, 52, 95]
         elif sentiment_label == "negative":
-            command["color"] = [0, 92.9, 49.8]
-            command["intensity"] = 20
+            command["color"] = [278, 47, 89]
+            
+        elif self._chr_match("yellow", text):
+            command["color"] = [40, 75, 100]
+        
+        elif self._chr_match("blue", text):
+            command["color"] = [239, 66, 97]
+
+        elif self._chr_match("red", text) or self._word_match("red", text):
+            command["color"] = [356, 75, 97]
             
         return command
