@@ -49,18 +49,18 @@ class NLPTaskController:
         return pred_data_bytes
 
     def eventsub(self, subscription_id: str) -> None:
-        logging.debug(f"Subscribing {subscription_id}")
+        print(f"Subscribing {subscription_id}", flush=True)
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback)
 
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         message_text = message.decode("utf-8")
-        logging.debug(f"Message {message_text} received")
+        print(f"Message {message_text} received", flush=True)
         
         prediction = self.inference(message_text)
         device_id = kwargs.get("device_id")
         session_id = kwargs.get("session_id")
         
-        logging.debug(f"Publishing {prediction.decode('utf-8')}")
+        print(f"Publishing {prediction.decode('utf-8')}", flush=True)
         
         publish_message(
             prediction,
