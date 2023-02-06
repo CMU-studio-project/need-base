@@ -1,5 +1,9 @@
 {
   "automatic-speech-recognition": {
-    "wav2vec2-large": "facebook/wav2vec2-large-960h-lv60-self"
+    "wav2vec2-large": "facebook/wav2vec2-large-960h-lv60-self",
+    "wav2vec2-conformer": "facebook/wav2vec2-conformer-rel-pos-large-960h-ft",
+    "gstt": null,
+    "wav2vec2-phoneme": "speech31/wav2vec2-large-english-TIMIT-phoneme_v3",
+    "google_cloud": null
   }
 }
