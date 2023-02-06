@@ -4,8 +4,6 @@ __pycache__/
 credentials/
 .venv/
 
-key_gen.py
-
 # Style checkers
 .flake8
 Makefile
