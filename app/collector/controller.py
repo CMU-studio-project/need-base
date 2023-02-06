@@ -1,6 +1,7 @@
 from typing import Optional
 import json
 import redis
+import time
 
 from needpubsub.publish import publish_message
 from needpubsub.subscribe import subscribe_message_async
@@ -20,6 +21,7 @@ class MessageCollector:
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback, timeout)
     
     def sub_callback(self, message: bytes, device_id: str, session_id: str, **kwargs) -> None:
+        t0 = time.time()
         redis_key = f"{device_id}-{session_id}"
         session_data = self.redis.get(redis_key)
         if session_data is None:
@@ -57,6 +59,9 @@ class MessageCollector:
             )
         else:
             self.redis.set(redis_key, json.dumps(session_data, ensure_ascii=False))
+        
+        t1 = time.time()
+        print(f"message {kwargs.get('message_id', '')} of session {session_id}: {t1-t0:.3f}", flush=True)
 
 if __name__ == "__main__":
     import argparse

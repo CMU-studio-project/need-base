@@ -3,6 +3,7 @@ import json
 from tempfile import NamedTemporaryFile
 from pathlib import Path
 from typing import Any
+import time
 
 from transformers import pipeline
 
@@ -52,6 +53,7 @@ class STTController:
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback)
 
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
+        t0 = time.time()
         prediction = self.inference(message)
         device_id = kwargs.get("device_id")
         session_id = kwargs.get("session_id")
@@ -75,6 +77,8 @@ class STTController:
             data_type="text"
         )
 
+        t1 = time.time()
+        print(f"message {kwargs.get('message_id', '')} of session {session_id}: {t1-t0:.3f}", flush=True)
 
 if __name__ == "__main__":
     import argparse

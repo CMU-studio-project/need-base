@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import Any
-import logging
+import time
 
 from transformers import pipeline
 
@@ -53,6 +53,7 @@ class NLPTaskController:
         subscribe_message_async(self.project_id, subscription_id, self.sub_callback)
 
     def sub_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
+        t0 = time.time()
         message_text = message.decode("utf-8")
         print(f"Message {message_text} received", flush=True)
         
@@ -71,6 +72,9 @@ class NLPTaskController:
             session_id=session_id,
             data_type=self.task
         )
+        
+        t1 = time.time()
+        print(f"message {kwargs.get('message_id', '')} of session {session_id}: {t1-t0:.3f}", flush=True)
 
 
 if __name__ == "__main__":
