@@ -20,7 +20,6 @@ class NLPTaskController(BaseController):
         self.task = task
         self.topic_id = topic_id
         model_config = self.load_model(task, model)
-        self.data_type = model_config["input_type"]
         self.pipeline = pipeline(task, model=model_config["model"], top_k=None)
         self.label_map = model_config.get("label_map")
 
