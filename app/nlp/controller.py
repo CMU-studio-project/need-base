@@ -21,7 +21,7 @@ class NLPTaskController(BaseController):
         self.topic_id = topic_id
         model_config = self.load_model(task, model)
         self.data_type = model_config["input_type"]
-        self.pipeline = pipeline(task, model=model_config["model"])
+        self.pipeline = pipeline(task, model=model_config["model"], top_k=None)
         self.label_map = model_config.get("label_map")
 
     @staticmethod
@@ -39,17 +39,20 @@ class NLPTaskController(BaseController):
         return model_config
 
     def inference(self, text: str) -> bytes:
-        prediction = self.pipeline(text)[0]
+        prediction = self.pipeline(text)
         if self.label_map is not None:
-            prediction["label"] = self.label_map[prediction["label"]]
-        pred_data = json.dumps(prediction, ensure_ascii=False)
-        pred_data_bytes = pred_data.encode("utf-8")
+            for pred in prediction:
+                pred["label"] = self.label_map[pred["label"]]
+        pred_data_str = json.dumps(prediction, ensure_ascii=False)
+        pred_data_bytes = pred_data_str.encode("utf-8")
 
         return pred_data_bytes
 
     def handle_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
-        message_text = message.decode("utf-8")
-        print(f"Message {message_text} received", flush=True)
+        message_dict = json.loads(message.decode("utf-8"))
+        print(f"Message {message_dict} received", flush=True)
+        
+        message_text = message_dict["transcript"]
 
         prediction = self.inference(message_text)
         device_id = kwargs.get("device_id")

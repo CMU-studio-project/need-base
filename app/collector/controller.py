@@ -21,20 +21,17 @@ class MessageCollector(BaseController):
         redis_key = f"{device_id}-{session_id}"
         session_data_byte = self.redis.get(redis_key)
         if session_data_byte is None:
-            session_data = {"text": None, "sentiment": None}
+            session_data = {"text": None, "sentiment-analysis": None}
         else:
             session_data = json.loads(session_data_byte)
 
         print(f"Receiving message {message!r}", flush=True)
 
         data_type = kwargs.get("data_type")
-        if data_type == "text":
-            session_data["text"] = message.decode("utf-8")
-        elif data_type == "sentiment-analysis":
-            session_data["sentiment"] = json.loads(message.decode("utf-8"))
-        else:
+        if data_type is None or data_type not in session_data:
             print(f"Invalid data type {data_type}", flush=True)
             return
+        session_data[data_type] = json.loads(message.decode("utf-8"))
 
         if all([v is not None for v in session_data.values()]):
             self.redis.delete(redis_key)

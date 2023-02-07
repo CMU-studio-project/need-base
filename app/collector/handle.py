@@ -16,8 +16,10 @@ class DataHandler:
         return cer(ref, pred) < threshold
 
     def handle(self, complete_data: Dict[str, Any]) -> Dict[str, Any]:
-        text = complete_data["text"]
-        sentiment = complete_data["sentiment"]
+        text_data = complete_data["text"]
+        text = text_data["transcript"]
+        sentiment_data = complete_data["sentiment-analysis"]
+        pred_sentiment = max(sentiment_data, key=lambda x: x["score"])
 
         command = {
             "power": None,
@@ -47,7 +49,7 @@ class DataHandler:
             command["intensity"] = -40
 
         # check sentiment
-        sentiment_label = sentiment["label"]
+        sentiment_label = pred_sentiment["label"]
         if sentiment_label == "positive":
             command["color"] = [308, 64, 88]
         elif sentiment_label == "neutral":
