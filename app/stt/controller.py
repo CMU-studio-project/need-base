@@ -38,8 +38,6 @@ class STTController(BaseController):
     def load_pipeline(self, model_name: str) -> Any:
         if model_name == "google-cloud":
             pipeline = GoogleCloudPipeline()
-        elif model_name == "whisper":
-            raise ValueError(f"OpenAI Whisper not yet supported")
         else:
             pipeline = HuggingfacePipeline(model=model_name)
         return pipeline
