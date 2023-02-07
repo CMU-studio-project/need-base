@@ -45,6 +45,20 @@ services:
       TOPIC_ID: ${TOPIC_ID:-stt-text}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-pi-speech-stt}
       TASK: ${TASK:-automatic-speech-analysis}
-      MODEL: ${MODEL:-wav2vec2-large}
+      MODEL: ${MODEL:-google-cloud}
+    volumes:
+      - ./app/stt/:/need/app/stt/
+  stp:
+    restart: always
+    build:
+      context: .
+      dockerfile: app/stt/Dockerfile
+    command: sh scripts/run_stt.sh
+    environment:
+      PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
+      TOPIC_ID: ${TOPIC_ID}
+      SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-pi-speech-stp}
+      TASK: ${TASK:-automatic-speech-analysis}
+      MODEL: ${MODEL:-wav2vec2-phoneme}
     volumes:
       - ./app/stt/:/need/app/stt/

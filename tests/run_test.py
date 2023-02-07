@@ -1,6 +1,6 @@
-import time
 import json
 from pathlib import Path
+import time
 from typing import Union
 
 from needpubsub.publish import publish_message
@@ -9,7 +9,7 @@ from needpubsub.subscribe import subscribe_message_sync
 
 class TestController:
     def __init__(self) -> None:
-        self.device_id = "pi7"
+        self.device_id = "test"
         self.text_topic_id = "pi-speech"
 
     def publish_text(self, audio: bytes) -> None:
@@ -32,7 +32,7 @@ class TestController:
             audio = f.read()
         self.publish_text(audio)
         self.get_response()
-        
+
     @staticmethod
     def sub_callback(message: bytes, **kwargs):
         command = json.loads(message.decode("utf-8"))
@@ -43,5 +43,13 @@ class TestController:
 if __name__ == "__main__":
     ctrl = TestController()
     wav_path = Path(__file__).parent / "ref_clean.wav"
-    
-    ctrl.run_test(wav_path)
+
+    times = []
+    for i in range(10):
+        t0 = time.time()
+        ctrl.run_test(wav_path)
+        t1 = time.time()
+        times.append(t1 - t0)
+        print(f"{t1 - t0}")
+
+    print(f"{sum(times) / len(times):.3f}")
