@@ -9,7 +9,7 @@ from needpubsub.subscribe import subscribe_message_sync
 
 class TestController:
     def __init__(self) -> None:
-        self.device_id = "pi7"
+        self.device_id = "test"
         self.text_topic_id = "pi-speech"
 
     def publish_text(self, audio: bytes) -> None:
