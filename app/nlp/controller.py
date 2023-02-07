@@ -39,7 +39,7 @@ class NLPTaskController(BaseController):
         return model_config
 
     def inference(self, text: str) -> bytes:
-        prediction = self.pipeline(text)
+        prediction = self.pipeline(text)[0]
         if self.label_map is not None:
             for pred in prediction:
                 pred["label"] = self.label_map[pred["label"]]
