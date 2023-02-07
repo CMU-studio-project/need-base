@@ -44,7 +44,7 @@ class STTController(BaseController):
 
     def inference(self, audio: bytes, extension: str = "wav") -> bytes:
         prediction = self.pipeline(audio, extension)
-        prediction_bytes = prediction.encode("utf-8")
+        prediction_bytes = json.dumps(prediction, ensure_ascii=False).encode("utf-8")
 
         return prediction_bytes
 
