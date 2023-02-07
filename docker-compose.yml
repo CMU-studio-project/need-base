@@ -31,7 +31,7 @@ services:
       TOPIC_ID: ${TOPIC_ID:-collector}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-stt-text-sentiment}
       TASK: ${TASK:-sentiment-analysis}
-      MODEL: ${MODEL:-roberta}
+      MODEL: ${MODEL:-xlm}
     volumes:
       - ./app/nlp/:/need/app/nlp/
   stt:
@@ -56,7 +56,6 @@ services:
     command: sh scripts/run_stt.sh
     environment:
       PROJECT_ID: ${PROJECT_ID:-iitp-class-team-4}
-      TOPIC_ID: ${TOPIC_ID}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-pi-speech-stp}
       TASK: ${TASK:-automatic-speech-analysis}
       MODEL: ${MODEL:-wav2vec2-phoneme}
