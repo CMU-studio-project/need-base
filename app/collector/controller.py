@@ -13,11 +13,12 @@ class MessageCollector(BaseController):
         self.topic_id = topic_id
         self.redis = redis.Redis(host="redis", port=6379, db=0)
         self.redis.flushdb()
-        self.handler = DataHandler()
+        self.handler = DataHandler(self.redis)
 
     def handle_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         device_id = kwargs.get("device_id", "")
         session_id = kwargs.get("session_id", "")
+        house = kwargs.get("house", None)
         redis_key = f"{device_id}-{session_id}"
         session_data_byte = self.redis.get(redis_key)
         if session_data_byte is None:
@@ -35,12 +36,12 @@ class MessageCollector(BaseController):
 
         if all([v is not None for v in session_data.values()]):
             self.redis.delete(redis_key)
-            command = self.handler.handle(session_data)
+            command = self.handler.handle(session_data, redis_key=redis_key, house=house)
             command_bytes = json.dumps(command, ensure_ascii=False).encode("utf-8")
 
             topic_id = f"{self.topic_id}-{device_id}"
             print(f"Publishing {command_bytes!r} to {topic_id}", flush=True)
-            
+
             publish_message(
                 command_bytes,
                 project_id=self.project_id,

@@ -1,5 +1,7 @@
+import glob
 import json
 from pathlib import Path
+import random
 import time
 from typing import Union
 
@@ -42,14 +44,17 @@ class TestController:
 
 if __name__ == "__main__":
     ctrl = TestController()
-    wav_path = Path(__file__).parent / "ref_clean.wav"
+    wav_paths = glob.glob(str(Path(__file__).parent / "spell_wav" / "*.wav"))
 
     times = []
-    for i in range(10):
+    for i in range(30):
+        wav_path = random.choice(wav_paths)
+        print(f"Testing {wav_path}")
+
         t0 = time.time()
         ctrl.run_test(wav_path)
         t1 = time.time()
         times.append(t1 - t0)
-        print(f"{t1 - t0}")
+        print(f"Time: {t1 - t0}")
 
-    print(f"{sum(times) / len(times):.3f}")
+    print(f"Avg time: {sum(times) / len(times):.3f}")
