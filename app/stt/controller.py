@@ -51,7 +51,6 @@ class STTController(BaseController):
         extension = kwargs.get("audio_ext", "wav")
         prediction = self.inference(message, extension)
         device_id = kwargs.get("device_id")
-        session_id = kwargs.get("session_id")
 
         print(f"Publishing {prediction.decode('utf-8')}", flush=True)
 
@@ -61,8 +60,6 @@ class STTController(BaseController):
                 project_id=self.project_id,
                 topic_id=self.topic_id,
                 ordering_key=device_id,
-                device_id=device_id,
-                session_id=session_id,
                 **kwargs,
             )
 
@@ -70,8 +67,6 @@ class STTController(BaseController):
             prediction,
             project_id=self.project_id,
             topic_id="collector",
-            device_id=device_id,
-            session_id=session_id,
             data_type=self.data_type,
             **kwargs,
         )

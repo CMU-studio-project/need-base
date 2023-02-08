@@ -55,7 +55,6 @@ class NLPTaskController(BaseController):
 
         prediction = self.inference(message_text)
         device_id = kwargs.get("device_id")
-        session_id = kwargs.get("session_id")
 
         print(f"Publishing {prediction.decode('utf-8')}", flush=True)
 
@@ -64,8 +63,6 @@ class NLPTaskController(BaseController):
             project_id=self.project_id,
             topic_id=self.topic_id,
             ordering_key=device_id,
-            device_id=device_id,
-            session_id=session_id,
             data_type=self.task,
             **kwargs,
         )

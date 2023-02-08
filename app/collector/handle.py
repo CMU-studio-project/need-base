@@ -45,7 +45,8 @@ class DataHandler:
     def test_house(
         self, sentiment_data: List[Dict[str, Any]], redis_key: str, house: Optional[str] = None
     ) -> Dict[str, Any]:
-        if house is None:
+        house_sent_bytes = self.redis.get(f"{redis_key}-house")
+        if house is None or house_sent_bytes is None:
             house_sentiments = {h: None for h in HOUSE_TEST_SET}
             self.redis.set(
                 f"{redis_key}-house",
@@ -57,11 +58,8 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": HOUSE_TEST_SET["gryffindor"]["test_word"],
+                "continued": True,
             }
-
-        house_sent_bytes = self.redis.get(f"{redis_key}-house")
-        if house_sent_bytes is None:
-            return {"power": None, "color": None, "intensity": None, "speaker": "error"}
 
         test_instance = HOUSE_TEST_SET[house]
         target_sentiment = list(
@@ -86,6 +84,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": HOUSE_TEST_SET[next_house]["test_word"],
+                "continued": True
             }
 
         else:
@@ -99,6 +98,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": f"Your final house is {final_house} | probs: {house_sentiments}",
+                "continued": False
             }
 
     def handle(
@@ -123,6 +123,7 @@ class DataHandler:
             "color": None,
             "intensity": None,
             "speaker": None,
+            "continued": False
         }
 
         # House test
