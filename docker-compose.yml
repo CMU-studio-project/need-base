@@ -31,7 +31,7 @@ services:
       TOPIC_ID: ${TOPIC_ID:-collector}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-stt-text-sentiment}
       TASK: ${TASK:-sentiment-analysis}
-      MODEL: ${MODEL:-xlm}
+      MODEL: ${MODEL:-roberta}
     volumes:
       - ./app/nlp/:/need/app/nlp/
   stt:
@@ -45,7 +45,7 @@ services:
       TOPIC_ID: ${TOPIC_ID:-stt-text}
       SUBSCRIPTION_ID: ${SUBSCRIPTION_ID:-pi-speech-stt}
       TASK: ${TASK:-automatic-speech-analysis}
-      MODEL: ${MODEL:-google-cloud}
+      MODEL: ${MODEL:-whisper-base}
     volumes:
       - ./app/stt/:/need/app/stt/
   stp:
