@@ -21,7 +21,7 @@ class MessageCollector(BaseController):
         redis_key = f"{device_id}-{session_id}"
         session_data_byte = self.redis.get(redis_key)
         if session_data_byte is None:
-            session_data = {"text": None, "sentiment-analysis": None}
+            session_data = {"text": None, "sentiment-analysis": None, "phoneme": None}
         else:
             session_data = json.loads(session_data_byte)
 

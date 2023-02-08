@@ -18,7 +18,7 @@ class BaseController:
 
         t1 = time.time()
         print(
-            f"message {kwargs.get('message_id', '')} of session {kwargs.get('session_id', '')}: {t1 - t0:.3f}",
+            f"Time: {t1 - t0:.3f}s | message {kwargs.get('message_id', '')} | session {kwargs.get('session_id', '')}",
             flush=True,
         )
 

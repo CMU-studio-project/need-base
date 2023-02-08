@@ -13,7 +13,7 @@ class HuggingfacePipeline:
             fp.write(audio)
             temp_audio_name = fp.name
 
-        prediction = self.pipeline(temp_audio_name)["text"].lower()
+        prediction = self.pipeline(temp_audio_name, max_new_tokens=448)["text"].lower()
         os.remove(temp_audio_name)
         
         return {
