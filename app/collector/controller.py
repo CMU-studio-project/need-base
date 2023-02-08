@@ -13,7 +13,7 @@ class MessageCollector(BaseController):
         self.topic_id = topic_id
         self.redis = redis.Redis(host="redis", port=6379, db=0)
         self.redis.flushdb()
-        self.handler = DataHandler()
+        self.handler = DataHandler(self.redis)
 
     def handle_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         device_id = kwargs.get("device_id", "")
