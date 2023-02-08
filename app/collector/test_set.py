@@ -77,3 +77,30 @@ TEST_SET = [
         "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
     }
 ]
+
+HOUSE_TEST_SET = {
+    "gryffindor": {
+        "test_word": "gryffindor test",
+        "wav_file": "gryffindor wave file",
+        "target_sentiment": "positive",
+        "next": "hufflepuff"
+    },
+    "hufflepuff": {
+        "test_word": "hufflepuff test",
+        "wav_file": "hufflepuff wave file",
+        "target_sentiment": "positive",
+        "next": "slytherin"
+    },
+    "slytherin": {
+        "test_word": "slytherin test",
+        "wav_file": "slytherin wave file",
+        "target_sentiment": "positive",
+        "next": "ravenclaw"
+    },
+    "ravenclaw": {
+        "test_word": "ravenclaw test",
+        "wav_file": "ravenclaw wave file",
+        "target_sentiment": "positive",
+        "next": None
+    }
+}
