@@ -58,7 +58,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": HOUSE_TEST_SET["gryffindor"]["test_word"],
-                "continued": True,
+                "house": "gryffindor",
             }
 
         test_instance = HOUSE_TEST_SET[house]
@@ -84,7 +84,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": HOUSE_TEST_SET[next_house]["test_word"],
-                "continued": True
+                "house": next_house
             }
 
         else:
@@ -98,7 +98,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": f"Your final house is {final_house} | probs: {house_sentiments}",
-                "continued": False
+                "house": None
             }
 
     def handle(
@@ -123,7 +123,7 @@ class DataHandler:
             "color": None,
             "intensity": None,
             "speaker": None,
-            "continued": False
+            "house": None
         }
 
         # House test
