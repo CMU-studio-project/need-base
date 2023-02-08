@@ -50,7 +50,7 @@ class NLPTaskController(BaseController):
     def handle_callback(self, message: bytes, **kwargs) -> None:  # type: ignore[no-untyped-def]
         message_dict = json.loads(message.decode("utf-8"))
         print(f"Message {message_dict} received", flush=True)
-        
+
         message_text = message_dict["transcript"]
 
         prediction = self.inference(message_text)
@@ -67,6 +67,7 @@ class NLPTaskController(BaseController):
             device_id=device_id,
             session_id=session_id,
             data_type=self.task,
+            **kwargs,
         )
 
 

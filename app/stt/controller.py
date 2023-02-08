@@ -1,12 +1,11 @@
 import json
 from pathlib import Path
-
 from typing import Any
 
 from needpubsub.publish import publish_message
 
 from app.base import BaseController
-from app.stt.pipelines import *
+from app.stt.pipelines import GoogleCloudPipeline, HuggingfacePipeline
 
 
 class STTController(BaseController):
@@ -22,7 +21,7 @@ class STTController(BaseController):
         self.topic_id = topic_id
         model_name = self.load_model(model)
         print(f"Loading model {model_name}...")
-        
+
         self.pipeline = self.load_pipeline(model_name)
         self.data_type = "phoneme" if "phoneme" in model else "text"
 
@@ -64,8 +63,9 @@ class STTController(BaseController):
                 ordering_key=device_id,
                 device_id=device_id,
                 session_id=session_id,
+                **kwargs,
             )
-            
+
         publish_message(
             prediction,
             project_id=self.project_id,
@@ -73,6 +73,7 @@ class STTController(BaseController):
             device_id=device_id,
             session_id=session_id,
             data_type=self.data_type,
+            **kwargs,
         )
 
 

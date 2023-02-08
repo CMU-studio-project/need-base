@@ -15,7 +15,10 @@ TEST_SET = [
         "target": "power",
         "value": "on",
         "text": {"ref": ["turn on", "lumos", "tarn on"], "threshold": {"cer": 0.2, "jw": 0.8}},
-        "phoneme": {"ref": ["oʊ mɑs", "ɔlmoʊst", "dʊ ms", "rumʊs"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "phoneme": {
+            "ref": ["oʊ mɑs", "ɔlmoʊst", "dʊ ms", "rumʊs"],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
     },
     {
         "name": "turn off",
@@ -23,7 +26,10 @@ TEST_SET = [
         "target": "power",
         "value": "off",
         "text": {"ref": ["turn off", "nox", "good bye"], "threshold": {"cer": 0.2, "jw": 0.8}},
-        "phoneme": {"ref": ["lʊks", "lʊksʃ", "lʊksɛ", "bʊks"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "phoneme": {
+            "ref": ["lʊks", "lʊksʃ", "lʊksɛ", "bʊks"],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
     },
     {
         "name": "brighter",
@@ -31,7 +37,15 @@ TEST_SET = [
         "target": "intensity",
         "value": 40,
         "text": {"ref": ["brighter", "lumos maxima"], "threshold": {"cer": 0.2, "jw": 0.8}},
-        "phoneme": {"ref": ["umoʊst mæksimə ɑrgju", "lums meɪks mɑʧ", "lʊmoʊs mæksəmɑpəl əpətrɪbjutj", "ðə moʊst mæksəmər"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "phoneme": {
+            "ref": [
+                "umoʊst mæksimə ɑrgju",
+                "lums meɪks mɑʧ",
+                "lʊmoʊs mæksəmɑpəl əpətrɪbjutj",
+                "ðə moʊst mæksəmər",
+            ],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
     },
     {
         "name": "darker",
@@ -46,11 +60,7 @@ TEST_SET = [
         "type": "map",
         "target": "color",
         "key": "sentiment",
-        "value": {
-            "positive": [308, 64, 88],
-            "neutral": [120, 52, 95],
-            "negative": [278, 47, 89]
-        }
+        "value": {"positive": [308, 64, 88], "neutral": [120, 52, 95], "negative": [278, 47, 89]},
     },
     {
         "name": "yellow",
@@ -68,14 +78,14 @@ TEST_SET = [
         "text": {"ref": ["blue"], "threshold": {"cer": 0.2, "jw": 0.8}},
         "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
     },
-{
+    {
         "name": "red",
         "type": "match",
         "target": "color",
         "value": [356, 75, 97],
         "text": {"ref": ["red"], "threshold": {"cer": 0.2, "jw": 0.8}},
         "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
-    }
+    },
 ]
 
 HOUSE_TEST_SET = {
@@ -83,24 +93,24 @@ HOUSE_TEST_SET = {
         "test_word": "gryffindor test",
         "wav_file": "gryffindor wave file",
         "target_sentiment": "positive",
-        "next": "hufflepuff"
+        "next": "hufflepuff",
     },
     "hufflepuff": {
         "test_word": "hufflepuff test",
         "wav_file": "hufflepuff wave file",
         "target_sentiment": "positive",
-        "next": "slytherin"
+        "next": "slytherin",
     },
     "slytherin": {
         "test_word": "slytherin test",
         "wav_file": "slytherin wave file",
         "target_sentiment": "positive",
-        "next": "ravenclaw"
+        "next": "ravenclaw",
     },
     "ravenclaw": {
         "test_word": "ravenclaw test",
         "wav_file": "ravenclaw wave file",
         "target_sentiment": "positive",
-        "next": None
-    }
+        "next": None,
+    },
 }

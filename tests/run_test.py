@@ -1,7 +1,7 @@
 import glob
-import random
 import json
 from pathlib import Path
+import random
 import time
 from typing import Union
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     for i in range(30):
         wav_path = random.choice(wav_paths)
         print(f"Testing {wav_path}")
-        
+
         t0 = time.time()
         ctrl.run_test(wav_path)
         t1 = time.time()
