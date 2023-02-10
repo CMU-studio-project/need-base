@@ -146,7 +146,7 @@ class DataHandler:
                     raise ValueError("Test not supported")
 
             # House test entry
-            if self._word_match("house test", text, trunc=True):
+            if self._word_match("house test", text, trunc=True) or self._word_match("하우스 테스트", text, trunc=True):
                 command = self.test_house(sentiment_data, redis_key)
 
         return command
