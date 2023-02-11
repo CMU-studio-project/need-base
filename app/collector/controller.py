@@ -1,7 +1,8 @@
 import json
+import time
+import redis
 
 from needpubsub.publish import publish_message
-import redis
 
 from app.base import BaseController
 from app.collector.handle import DataHandler
@@ -20,6 +21,11 @@ class MessageCollector(BaseController):
         session_id = kwargs.get("session_id", "")
         house = kwargs.get("house", None)
         redis_key = f"{device_id}-{session_id}"
+        lock_key = f"{redis_key}-lock"
+        while True:
+            if self.redis.setnx(lock_key, 1):
+                break
+            time.sleep(0.001)
         session_data_byte = self.redis.get(redis_key)
         if session_data_byte is None:
             session_data = {"text": None, "sentiment-analysis": None, "phoneme": None}
@@ -51,6 +57,7 @@ class MessageCollector(BaseController):
             )
         else:
             self.redis.set(redis_key, json.dumps(session_data, ensure_ascii=False))
+        self.redis.delete(lock_key)
 
 
 if __name__ == "__main__":
