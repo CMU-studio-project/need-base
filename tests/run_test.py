@@ -67,6 +67,7 @@ class NeedApp:
         answer_audio = answer2audio[answer]
         # - - -
         self.send_audio(answer_audio, session_id=session_id, house=house)
+        self.wait_command()
     
     def sub_callback(self, message: bytes, **kwargs) -> None:
         command = json.loads(message.decode("utf-8"))
