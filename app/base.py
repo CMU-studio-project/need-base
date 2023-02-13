@@ -21,7 +21,8 @@ class BaseController:
 
         t1 = time.time()
         print(
-            f"[Callback]({datetime.datetime.now(tz=tz)}) Time: {t1 - t0:.3f}s | session {kwargs.get('session_id', '')}",
+            f"[Callback]({datetime.datetime.now(tz=tz).strftime(DT_FORMAT)}) "
+            f"Time: {t1 - t0:.3f}s | session {kwargs.get('session_id', '')}",
             flush=True,
         )
 

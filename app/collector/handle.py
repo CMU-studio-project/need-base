@@ -69,7 +69,7 @@ class DataHandler:
             }
         
         # Restart
-        if self.test_match(test_source, HOUSE_TEST_SET["restart"]):
+        if self.test_match(test_source, HOUSE_TEST_SET["replay"]):
             return {
                 "power": None,
                 "color": None,
