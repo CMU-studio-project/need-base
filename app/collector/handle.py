@@ -54,7 +54,7 @@ class DataHandler:
         # Start
         house_sent_bytes = self.redis.get(f"{redis_key}-house")
         if house is None or house_sent_bytes is None:
-            house_sentiments = {h: None for h in HOUSE_TEST_SET}
+            house_sentiments = {h: None for h in ["gryffindor", "hufflepuff", "slytherin", "ravenclaw"]}
             self.redis.set(
                 f"{redis_key}-house",
                 json.dumps(house_sentiments, ensure_ascii=False).encode("utf-8"),
