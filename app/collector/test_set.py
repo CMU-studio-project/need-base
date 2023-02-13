@@ -148,7 +148,7 @@ HOUSE_TEST_SET = {
         },
         "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
     },
-    "end": {
+    "stop": {
         "name": "house end",
         "type": "match",
         "target": "house",
