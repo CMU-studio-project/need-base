@@ -21,13 +21,11 @@ class DataHandler:
     @staticmethod
     def _chr_match(ref: str, pred: str, threshold: float = 0.2) -> bool:
         error_rate = cer(ref, pred)
-        print(f"[CER] ref: {ref} | pred: {pred} | score: {error_rate}", flush=True)
         return error_rate <= threshold
 
     @staticmethod
     def _jw_similarity(ref: str, pred: str, threshold: float = 0.8) -> bool:
         similarity = jaro_winkler(ref, pred)
-        print(f"[JARO-WINKLER] ref: {ref} | pred: {pred} | score: {similarity}", flush=True)
         return similarity >= threshold
 
     def test_match(self, source: Dict[str, Any], test_instance: Any) -> Any:
@@ -36,10 +34,10 @@ class DataHandler:
             ref_set = test_instance[data_type]
             thres = ref_set["threshold"]
             for ref in ref_set["ref"]:
-                if self._chr_match(ref, src, threshold=thres["cer"]) or self._jw_similarity(
-                    ref, src, threshold=thres["jw"]
-                ):
-                    print(f"[Sim-Pass] ref: {ref} | pred: {src}", flush=True)
+                chr_match = self._chr_match(ref, src, threshold=thres["cer"])
+                jw_match = self._jw_similarity(ref, src, threshold=thres["jw"])
+                if chr_match or jw_match:
+                    print(f"[Sim-Pass] ref: {ref} | pred: {src} | thres: {thres}", flush=True)
                     return test_instance["value"]
         return
 
