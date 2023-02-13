@@ -1,8 +1,8 @@
 import json
 import time
-import redis
 
 from needpubsub.publish import publish_message
+import redis
 
 from app.base import BaseController
 from app.collector.handle import DataHandler

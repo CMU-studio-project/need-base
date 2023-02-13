@@ -1,7 +1,10 @@
 import time
+import datetime
 
 from needpubsub.subscribe import subscribe_message_async
 
+tz = datetime.timezone(datetime.timedelta(hours=-5))
+DT_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 class BaseController:
     def __init__(self, project_id: str = "iitp-class-team-4"):
@@ -18,7 +21,7 @@ class BaseController:
 
         t1 = time.time()
         print(
-            f"Time: {t1 - t0:.3f}s | message {kwargs.get('message_id', '')} | session {kwargs.get('session_id', '')}",
+            f"[Callback]({datetime.datetime.now(tz=tz)}) Time: {t1 - t0:.3f}s | session {kwargs.get('session_id', '')}",
             flush=True,
         )
 

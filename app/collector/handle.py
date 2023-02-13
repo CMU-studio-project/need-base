@@ -20,11 +20,15 @@ class DataHandler:
 
     @staticmethod
     def _chr_match(ref: str, pred: str, threshold: float = 0.2) -> bool:
-        return cer(ref, pred) <= threshold
+        error_rate = cer(ref, pred)
+        print(f"[CER] ref: {ref} | pred: {pred} | score: {error_rate}", flush=True)
+        return error_rate <= threshold
 
     @staticmethod
     def _jw_similarity(ref: str, pred: str, threshold: float = 0.8) -> bool:
-        return jaro_winkler(ref, pred) >= threshold
+        similarity = jaro_winkler(ref, pred)
+        print(f"[JARO-WINKLER] ref: {ref} | pred: {pred} | score: {similarity}", flush=True)
+        return similarity >= threshold
 
     def test_match(self, source: Dict[str, Any], test_instance: Any) -> Any:
         for data_type in ["text", "phoneme"]:
@@ -35,6 +39,7 @@ class DataHandler:
                 if self._chr_match(ref, src, threshold=thres["cer"]) or self._jw_similarity(
                     ref, src, threshold=thres["jw"]
                 ):
+                    print(f"[Sim-Pass] ref: {ref} | pred: {src}", flush=True)
                     return test_instance["value"]
         return
 
@@ -84,7 +89,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": HOUSE_TEST_SET[next_house]["test_word"],
-                "house": next_house
+                "house": next_house,
             }
 
         else:
@@ -98,7 +103,7 @@ class DataHandler:
                 "color": None,
                 "intensity": None,
                 "speaker": f"Your final house is {final_house} | probs: {house_sentiments}",
-                "house": None
+                "house": None,
             }
 
     def handle(
@@ -118,13 +123,7 @@ class DataHandler:
 
         test_source = {"text": text, "sentiment": pred_sentiment, "phoneme": phoneme}
 
-        command = {
-            "power": None,
-            "color": None,
-            "intensity": None,
-            "speaker": None,
-            "house": None
-        }
+        command = {"power": None, "color": None, "intensity": None, "speaker": None, "house": None}
 
         # House test
         if house is not None:
@@ -146,7 +145,9 @@ class DataHandler:
                     raise ValueError("Test not supported")
 
             # House test entry
-            if self._word_match("house test", text, trunc=True) or self._word_match("하우스 테스트", text, trunc=True):
+            if self._word_match("house test", text, trunc=True) or self._word_match(
+                "하우스 테스트", text, trunc=True
+            ):
                 command = self.test_house(sentiment_data, redis_key)
 
         return command
