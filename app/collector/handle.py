@@ -48,8 +48,12 @@ class DataHandler:
         return test_instance["value"][source[test_instance["key"]]]
 
     def test_house(
-        self, sentiment_data: List[Dict[str, Any]], redis_key: str, house: Optional[str] = None
+        self,
+        test_source: Dict[str, Any],
+        sentiment_data: List[Dict[str, Any]],
+        redis_key: str, house: Optional[str] = None
     ) -> Dict[str, Any]:
+        # Start
         house_sent_bytes = self.redis.get(f"{redis_key}-house")
         if house is None or house_sent_bytes is None:
             house_sentiments = {h: None for h in HOUSE_TEST_SET}
@@ -65,7 +69,29 @@ class DataHandler:
                 "speaker": HOUSE_TEST_SET["gryffindor"]["test_word"],
                 "house": "gryffindor",
             }
+        
+        # Restart
+        if self.test_match(test_source, HOUSE_TEST_SET["restart"]):
+            return {
+                "power": None,
+                "color": None,
+                "intensity": None,
+                "speaker": HOUSE_TEST_SET[house]["test_word"],
+                "house": house,
+            }
+        
+        # Stop
+        if self.test_match(test_source, HOUSE_TEST_SET["stop"]):
+            self.redis.delete(f"{redis_key}-house")
+            return {
+                "power": None,
+                "color": None,
+                "intensity": None,
+                "speaker": "House test stop",
+                "house": None,
+            }
 
+        # Sentiment analysis
         test_instance = HOUSE_TEST_SET[house]
         target_sentiment = list(
             filter(lambda x: x["label"] == test_instance["target_sentiment"], sentiment_data)  # type: ignore[arg-type]
@@ -78,6 +104,7 @@ class DataHandler:
             flush=True,
         )
 
+        # Next house
         next_house = test_instance["next"]
         if next_house is not None:
             self.redis.set(
@@ -92,6 +119,7 @@ class DataHandler:
                 "house": next_house,
             }
 
+        # Final decision
         else:
             self.redis.delete(f"{redis_key}-house")
             final_house = max(house_sentiments.items(), key=lambda x: x[1])[0]  # type: ignore[arg-type]
@@ -127,7 +155,7 @@ class DataHandler:
 
         # House test
         if house is not None:
-            command = self.test_house(sentiment_data, redis_key, house)
+            command = self.test_house(test_source, sentiment_data, redis_key, house)
 
         else:
             # Other tests
@@ -145,9 +173,7 @@ class DataHandler:
                     raise ValueError("Test not supported")
 
             # House test entry
-            if self._word_match("house test", text, trunc=True) or self._word_match(
-                "하우스 테스트", text, trunc=True
-            ):
-                command = self.test_house(sentiment_data, redis_key)
+            if self.test_match(test_source, HOUSE_TEST_SET["start"]):
+                command = self.test_house(test_source, sentiment_data, redis_key)
 
         return command

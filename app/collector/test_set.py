@@ -137,4 +137,37 @@ HOUSE_TEST_SET = {
         "target_sentiment": "positive",
         "next": None,
     },
+    "start": {
+        "name": "house start",
+        "type": "match",
+        "target": "house",
+        "value": "house",
+        "text": {
+            "ref": ["house test", "하우스 테스트", "하우스테스트"],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
+        "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
+    },
+    "end": {
+        "name": "house end",
+        "type": "match",
+        "target": "house",
+        "value": "stop",
+        "text": {
+            "ref": ["stop sorting", "finite", "스탑 소팅"],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
+        "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
+    },
+    "replay": {
+        "name": "house replay",
+        "type": "match",
+        "target": "house",
+        "value": "replay",
+        "text": {
+            "ref": ["replay"],
+            "threshold": {"cer": 0.2, "jw": 0.8},
+        },
+        "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
+    },
 }
