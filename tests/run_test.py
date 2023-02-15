@@ -60,11 +60,14 @@ class NeedApp:
         # - - -
 
         # TODO: mic listener로 대체
-        answer = input("positive/negative? ")
+        answer = input("positive/negative/finite/repeat/stop? ")
 
         answer2audio = {
             "positive": "tests/commands/positive_sentiment.wav",
             "negative": "tests/commands/negative_sentiment.wav",
+            "finite": "tests/commands/finite.wav",
+            "repeat": "tests/commands/repeat.wav",
+            "stop": "tests/commands/stop_sorting.wav"
         }
         answer_audio = answer2audio[answer]
         # - - -

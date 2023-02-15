@@ -28,10 +28,14 @@ class GoogleCloudPipeline:
         )
 
         response = self.client.recognize(config=config, audio=audio)
-        result = response.results[0]
-        alternative = result.alternatives[0]
-        transcript = alternative.transcript
-        confidence = alternative.confidence
+        try:
+            result = response.results[0]
+            alternative = result.alternatives[0]
+            transcript = alternative.transcript
+            confidence = alternative.confidence
+        except IndexError:
+            transcript = ""
+            confidence = 0.
         language_code = self.lang_map.get(result.language_code)
 
         if language_code == "en-US":
