@@ -14,7 +14,7 @@ TEST_SET = [
         "type": "match",
         "target": "power",
         "value": "on",
-        "text": {"ref": ["turn on", "lumos", "tarn on", "루모스"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "text": {"ref": ["turn on", "lumos", "tarn on", "루모스"], "threshold": {"cer": 0.2, "jw": 0.87}},
         "phoneme": {
             "ref": ["oʊ mɑs", "ɔlmoʊst", "dʊ ms", "rumʊs"],
             "threshold": {"cer": 0.2, "jw": 0.8},
@@ -36,7 +36,7 @@ TEST_SET = [
         "type": "match",
         "target": "intensity",
         "value": 100,
-        "text": {"ref": ["brightest", "lumos solem", "루모스 솔렘", "루모스 솔램"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "text": {"ref": ["brightest", "lumos solem", "루모스 솔렘", "루모스 솔램"], "threshold": {"cer": 0.2, "jw": 0.87}},
         "phoneme": {
             "ref": [
                 "lu moʊst sɑlɛnər",
@@ -52,7 +52,7 @@ TEST_SET = [
         "type": "match",
         "target": "intensity",
         "value": 40,
-        "text": {"ref": ["brighter", "lumos maxima", "루모스 맥시마"], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "text": {"ref": ["brighter", "lumos maxima", "루모스 맥시마"], "threshold": {"cer": 0.2, "jw": 0.87}},
         "phoneme": {
             "ref": [
                 "umoʊst mæksimə ɑrgju",

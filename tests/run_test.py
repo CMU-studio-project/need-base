@@ -116,4 +116,4 @@ if __name__ == "__main__":
         print(f"Avg time: {sum(times) / len(times):.3f}")
 
     if args.house_test:
-        ctrl.run("tests/commands/house_test.wav")
+        ctrl.run("tests/house_test.wav")
