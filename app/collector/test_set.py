@@ -157,7 +157,7 @@ HOUSE_TEST_SET = {
             "ref": ["stop sorting", "finite", "스탑 소팅"],
             "threshold": {"cer": 0.2, "jw": 0.8},
         },
-        "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "phoneme": {"ref": ["ɛnip"], "threshold": {"cer": 0.2, "jw": 0.8}},
     },
     "replay": {
         "name": "house replay",
@@ -165,9 +165,9 @@ HOUSE_TEST_SET = {
         "target": "house",
         "value": "replay",
         "text": {
-            "ref": ["replay"],
+            "ref": ["replay", "repeat", "please repeat"],
             "threshold": {"cer": 0.2, "jw": 0.8},
         },
-        "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
+        "phoneme": {"ref": ["rɪpɪt"], "threshold": {"cer": 0.2, "jw": 0.8}},
     },
 }
