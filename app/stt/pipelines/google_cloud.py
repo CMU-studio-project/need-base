@@ -37,9 +37,7 @@ class GoogleCloudPipeline:
             transcript = ""
             confidence = 0.
         language_code = self.lang_map.get(result.language_code)
-
-        if language_code == "en-US":
-            transcript = transcript.lower()
+        transcript = transcript.lower()
 
         return {"transcript": transcript, "confidence": confidence, "language": language_code}
 

@@ -143,7 +143,7 @@ HOUSE_TEST_SET = {
         "target": "house",
         "value": "house",
         "text": {
-            "ref": ["house test", "하우스 테스트", "하우스테스트"],
+            "ref": ["house test", "hogwart house test", "하우스 테스트", "하우스테스트", "호그와트 하우스 테스트"],
             "threshold": {"cer": 0.2, "jw": 0.8},
         },
         "phoneme": {"ref": [], "threshold": {"cer": 0.2, "jw": 0.8}},
