@@ -36,7 +36,7 @@ TEST_SET = [
         "type": "match",
         "target": "intensity",
         "value": 100,
-        "text": {"ref": ["brightest", "lumos solem", "루모스 솔렘", "루모스 솔램"], "threshold": {"cer": 0.2, "jw": 0.89}},
+        "text": {"ref": ["brightest", "lumos solem", "루모스 솔렘", "루모스 솔램"], "threshold": {"cer": 0.2, "jw": 0.94}},
         "phoneme": {
             "ref": [
                 "lu moʊst sɑlɛnər",
