@@ -14,7 +14,7 @@ TEST_SET = [
         "type": "match",
         "target": "power",
         "value": "on",
-        "text": {"ref": ["turn on", "lumos", "tarn on", "루모스"], "threshold": {"cer": 0.2, "jw": 0.87}},
+        "text": {"ref": ["turn on", "lumos", "tarn on", "루모스"], "threshold": {"cer": 0.2, "jw": 0.925}},
         "phoneme": {
             "ref": ["oʊ mɑs", "ɔlmoʊst", "dʊ ms", "rumʊs"],
             "threshold": {"cer": 0.2, "jw": 0.8},
