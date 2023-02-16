@@ -33,10 +33,12 @@ class GoogleCloudPipeline:
             alternative = result.alternatives[0]
             transcript = alternative.transcript
             confidence = alternative.confidence
+            language_code = self.lang_map.get(result.language_code)
         except IndexError:
             transcript = ""
-            confidence = 0.
-        language_code = self.lang_map.get(result.language_code)
+            confidence = None
+            language_code = "en-US"
+
         transcript = transcript.lower()
 
         return {"transcript": transcript, "confidence": confidence, "language": language_code}
