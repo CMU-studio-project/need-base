@@ -1,44 +1,30 @@
 # NEED-Coddlers
+Light bulb control with spell and house sorting hat
 
-## Initial Setting
+## Installation
+
+#### Docker setting
+You need to install [docker](https://docs.docker.com/get-docker/) corresponding to your system.
 
 #### Clone
 ```shell
 git clone https://github.com/CMU-studio-project/need-base.git
+cd need-base
+git clone https://github.com/CMU-studio-project/need-pubsub.git
 ```
 
-#### Install requirements (Under preferred env/virtualenv)
-```shell
-pip install -r requirements.txt
-```
-
-#### Tested version
+#### Tested python version
 - Python3.8
 - Python3.10
 
 #### Request credentials
-- Notion 참조
-
-## Publish data
-```python
-from pubsub.publish import publish_message
-
-data = b"Some bytes message"
-publish_message(data, "topic name", any_keyword_key="any_keyword_val")
+- To run messaging through Google Pub/Sub, you would need service account key installed
+```shell
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service/account/credentials.json
 ```
 
-## Run push subscription
-set module/task/model
+## Running all services
+In need-base directory, run:
 ```shell
-export NEED_PROJECT_MODULE=nlp
-export NEED_PROJECT_TASK=sentiment
-export NEED_PROJECT_MODEL=roberta
-```
-run eventsub server
-```shell
-python pubsub/push_subscribe.py
-```
-run ngrok
-```shell
-ngrok http 18080
+docker compose up -d --build
 ```
