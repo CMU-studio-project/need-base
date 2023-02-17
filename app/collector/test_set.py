@@ -103,31 +103,31 @@ TEST_SET = [
         "type": "map",
         "target": "color",
         "key": "sentiment",
-        "value": {"positive": [308, 64, 88], "neutral": [120, 52, 95], "negative": [278, 47, 89]},
+        "value": {"positive": [86, 100, 80], "neutral": [120, 52, 95], "negative": [0, 100, 96]},
     },
 ]
 
 HOUSE_TEST_SET = {
     "gryffindor": {
-        "test_word": "gryffindor",
+        "test_word": "test",
         "wav_file": "gryffindor wave file",
+        "target_sentiment": "positive",
+        "next": "slytherin",
+    },
+    "slytherin": {
+        "test_word": "test",
+        "wav_file": "slytherin wave file",
         "target_sentiment": "positive",
         "next": "hufflepuff",
     },
     "hufflepuff": {
-        "test_word": "hufflepuff",
+        "test_word": "test",
         "wav_file": "hufflepuff wave file",
         "target_sentiment": "negative",
-        "next": "slytherin",
-    },
-    "slytherin": {
-        "test_word": "slytherin",
-        "wav_file": "slytherin wave file",
-        "target_sentiment": "positive",
         "next": "ravenclaw",
     },
     "ravenclaw": {
-        "test_word": "ravenclaw",
+        "test_word": "test",
         "wav_file": "ravenclaw wave file",
         "target_sentiment": "positive",
         "next": None,
