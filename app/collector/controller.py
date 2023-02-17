@@ -32,13 +32,14 @@ class MessageCollector(BaseController):
         else:
             session_data = json.loads(session_data_byte)
 
-        print(f"Receiving message {message!r}", flush=True)
+        decoded_message = message.decode("utf-8")
+        print(f"Receiving message {decoded_message}", flush=True)
 
         data_type = kwargs.get("data_type")
         if data_type is None or data_type not in session_data:
             print(f"Invalid data type {data_type}", flush=True)
             return
-        session_data[data_type] = json.loads(message.decode("utf-8"))
+        session_data[data_type] = json.loads(decoded_message)
 
         if all([v is not None for v in session_data.values()]):
             self.redis.delete(redis_key)

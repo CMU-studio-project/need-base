@@ -99,7 +99,8 @@ if __name__ == "__main__":
     ctrl = NeedApp(project_id="iitp-class-team-4", device_id="test", topic_id="pi-speech")
 
     if args.time_test:
-        wav_paths = glob.glob(str(Path(__file__).parent / "spell_wav" / "*.wav"))
+        wav_paths = glob.glob(str(Path(__file__).parent / "spell_wav" / "*.wav")) + \
+                    glob.glob(str(Path(__file__).parent / "commands" / "*.wav"))
 
         times = []
         for _ in range(30):
@@ -115,4 +116,4 @@ if __name__ == "__main__":
         print(f"Avg time: {sum(times) / len(times):.3f}")
 
     if args.house_test:
-        ctrl.run("tests/commands/house_test.wav")
+        ctrl.run("tests/house_test.wav")

@@ -54,7 +54,7 @@ class DataHandler:
         # Start
         house_sent_bytes = self.redis.get(f"{redis_key}-house")
         if house is None or house_sent_bytes is None:
-            house_sentiments = {h: None for h in ["gryffindor", "hufflepuff", "slytherin", "ravenclaw"]}
+            house_sentiments = {h: None for h in ["gryffindor", "slytherin", "hufflepuff",  "ravenclaw"]}
             self.redis.set(
                 f"{redis_key}-house",
                 json.dumps(house_sentiments, ensure_ascii=False).encode("utf-8"),
@@ -128,8 +128,8 @@ class DataHandler:
                 "power": None,
                 "color": None,
                 "intensity": None,
-                "speaker": f"Your final house is {final_house} | probs: {house_sentiments}",
-                "house": None,
+                "speaker": house_sentiments[final_house],
+                "house": final_house,
             }
 
     def handle(
